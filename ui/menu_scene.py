@@ -48,6 +48,12 @@ class MenuScene(BaseScene):
         if self.quit_button.is_clicked(event):
             pygame.event.post(pygame.event.Event(pygame.QUIT))
 
+        # Always allow ESC to return to menu
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            from ui.menu_scene import MenuScene
+            self.scene_manager.set_scene(MenuScene(self.scene_manager))
+            return
+
 
     def update(self, dt: float) -> None:
         """Menu has no logic to update."""
