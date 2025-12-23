@@ -50,7 +50,7 @@ class EndScene(BaseScene):
         )
 
     def handle_event(self, event: pygame.event.Event) -> None:
-        if self.restart_button.is_clicked(event):
+        if self.restart_button.is_clicked(event) or (event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN):
             from ui.game_scene import GameScene
             self.scene_manager.set_scene(GameScene(self.scene_manager))
 
