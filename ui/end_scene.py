@@ -58,6 +58,11 @@ class EndScene(BaseScene):
             from ui.menu_scene import MenuScene
             self.scene_manager.set_scene(MenuScene(self.scene_manager))
 
+        # Always allow ESC to return to menu
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            from ui.menu_scene import MenuScene
+            self.scene_manager.set_scene(MenuScene(self.scene_manager))
+            return
 
     def update(self, dt: float) -> None:
         """No logic to update on end screen."""
