@@ -45,7 +45,7 @@ class MenuScene(BaseScene):
             from ui.game_scene import GameScene
             self.scene_manager.set_scene(GameScene(self.scene_manager))
 
-        if self.quit_button.is_clicked(event):
+        if self.quit_button.is_clicked(event) or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
             pygame.event.post(pygame.event.Event(pygame.QUIT))
 
         # Always allow ESC to return to menu
