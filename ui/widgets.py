@@ -70,7 +70,7 @@ class InputBox:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_BACKSPACE:
                 self.text = self.text[:-1]
-            elif event.unicode.isdigit():
+            elif event.unicode.isdigit() and int(self.text + event.unicode) < 1000000000000:
                 self.text += event.unicode
 
     def clear(self) -> None:
