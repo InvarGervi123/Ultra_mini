@@ -25,7 +25,8 @@ from core.constants import (
     COLOR_WHITE,
     COLOR_WARNING,
 )
-from core.events import TICK_EVENT, TIME_UP_EVENT
+from core.events import TICK_EVENT, TIME_UP_EVENT, FLASH_EVENT
+from ui.sprites import Player, QuestionSprite
 from ui.widgets import InputBox
 from ui.end_scene import EndScene
 
@@ -58,6 +59,16 @@ class GameScene(BaseScene):
             self.info_font,
         )
 
+        # Sprites: player and question rendered as sprites
+        self.sprites = pygame.sprite.Group()
+        # Player on the left side
+        self.player_sprite = Player((80, HEIGHT // 2))
+        self.sprites.add(self.player_sprite)
+
+        # Question rendered as a sprite (centered above input)
+        self.question_sprite = QuestionSprite(self.question.text, self.question_font, (WIDTH // 2, HEIGHT // 2 - 40))
+        self.sprites.add(self.question_sprite)
+
     # --------------------------------------------------
     # Event handling
     # --------------------------------------------------
@@ -88,6 +99,10 @@ class GameScene(BaseScene):
             if self.time_left <= 0:
                 pygame.event.post(pygame.event.Event(TIME_UP_EVENT))
 
+        # Custom event: flash (toggle player blink)
+        if event.type == FLASH_EVENT:
+            self.player_sprite.toggle_flash()
+
         # Custom event: time is up
         if event.type == TIME_UP_EVENT:
             self.scene_manager.set_scene(EndScene(self.scene_manager, self.score))
@@ -103,7 +118,8 @@ class GameScene(BaseScene):
         we use TICK_EVENT for timing,
         but it is kept for consistency.
         """
-        pass
+        # update sprites (if they have animations / state)
+        self.sprites.update(dt)
 
     def check_answer(self) -> None:
         """Check user answer and move to next level if correct."""
@@ -117,6 +133,8 @@ class GameScene(BaseScene):
 
             # New question
             self.question = MixedQuestion()
+            # update question sprite text
+            self.question_sprite.set_text(self.question.text)
             self.input_box.clear()
         else:
             # Wrong answer = game over
@@ -128,12 +146,8 @@ class GameScene(BaseScene):
     def draw(self, screen: pygame.Surface) -> None:
         """Draw game UI."""
 
-        # Question
-        question_surface = self.question_font.render(
-            self.question.text, True, COLOR_WHITE
-        )
-        question_rect = question_surface.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 40))
-        screen.blit(question_surface, question_rect)
+        # Sprites (player, question)
+        self.sprites.draw(screen)
 
         # Input box
         self.input_box.draw(screen)

@@ -17,3 +17,7 @@ TICK_EVENT: int = pygame.USEREVENT + 1
 
 # Fired when time for a question is over
 TIME_UP_EVENT: int = pygame.USEREVENT + 2
+
+# Additional custom event used for visual effects (blinking player)
+# Demonstrates using more than one custom event/timer in the app
+FLASH_EVENT: int = pygame.USEREVENT + 3

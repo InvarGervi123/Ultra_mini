@@ -16,7 +16,7 @@ import sys
 import pygame
 
 from core.constants import WIDTH, HEIGHT, FPS
-from core.events import TICK_EVENT
+from core.events import TICK_EVENT, FLASH_EVENT
 from core.scene_manager import SceneManager
 from ui.menu_scene import MenuScene
 
@@ -58,8 +58,11 @@ class GameApp:
         # Start with MenuScene
         self.scene_manager.set_scene(MenuScene(self.scene_manager))
 
-        # Start a repeating custom event (tick every 100ms)
+        # Start repeating custom events:
+        # - tick every 100ms (game timer)
+        # - flash every 700ms (visual effect / sprite blink)
         pygame.time.set_timer(TICK_EVENT, 100)
+        pygame.time.set_timer(FLASH_EVENT, 700)
 
         self.running = True
 
