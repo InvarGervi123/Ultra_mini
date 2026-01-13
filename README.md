@@ -4,6 +4,8 @@ A Python-based mini game / application developed with **high‑tech engineering 
 
 This repository reflects a **real-world software development process**: incremental feature delivery, focused bug fixes, and clear commit history documenting each technical improvement.
 
+<img width="1917" height="1030" alt="image" src="https://github.com/user-attachments/assets/c59a4b0a-b3e9-44f3-8346-2d7e3d0e2c2c" />
+
 ---
 
 ## Key Features
